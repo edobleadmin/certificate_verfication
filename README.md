@@ -288,5 +288,6 @@ This project is proprietary software developed for Edoble. All rights reserved.
 ---
 
 **Built with ❤️ by Edoble Team**
-*Code with a Purpose - Build smart. Think bold. Impact real.* #   c e r t i f i c a t e _ v e r f i c a t i o n  
+*Code with a Purpose - Build smart. Think bold. Impact real.* #   c e r t i f i c a t e _ v e r f i c a t i o n 
+ 
  
