@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Create Intern Certificate - Edoble{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="fas fa-certificate text-primary me-2"></i>
+        Create Intern Certificate
+    </h2>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-plus-circle text-primary me-2"></i>
+                    Intern Certificate Details
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="holder_name" class="form-label">Intern Name *</label>
+                                <input type="text" class="form-control" id="holder_name" name="holder_name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="course_name" class="form-label">Internship Program/Project *</label>
+                                <input type="text" class="form-control" id="course_name" name="course_name"
+                                    placeholder="e.g., Full-Stack Development, Mobile App Development" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="issue_date" class="form-label">Completion Date *</label>
+                                <input type="date" class="form-control" id="issue_date" name="issue_date" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="issuer_name" class="form-label">Issuer Name *</label>
+                                <input type="text" class="form-control" id="issuer_name" name="issuer_name"
+                                    value="Edoble" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="issuer_logo" class="form-label">Company Logo (Optional)</label>
+                        <input type="file" class="form-control" id="issuer_logo" name="issuer_logo" accept="image/*">
+                        <div class="form-text">Upload Edoble logo or company logo (PNG, JPG, JPEG)</div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-certificate me-2"></i>Generate Intern Certificate
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-eye text-primary me-2"></i>
+                    Certificate Preview
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="certificate-preview" class="text-center">
+                    <div class="border rounded p-4 bg-light">
+                        <h4 class="edoble-brand mb-2">EDOBLE</h4>
+                        <p class="edoble-tagline mb-3">Code with a Purpose</p>
+                        <h5>Certificate of Internship Completion</h5>
+                        <hr>
+                        <p><strong>This is to certify that</strong></p>
+                        <h6 id="preview-holder">[Intern Name]</h6>
+                        <p>has successfully completed the internship program</p>
+                        <h6 id="preview-course">[Internship Program]</h6>
+                        <hr>
+                        <p><strong>Completion Date:</strong> <span id="preview-date">[Date]</span></p>
+                        <p><strong>Issuer:</strong> <span id="preview-issuer">Edoble</span></p>
+                        <p><strong>Certificate ID:</strong> <span id="preview-id">[Auto-generated]</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <i class="fas fa-info-circle text-info me-2"></i>
+                    About Edoble Internships
+                </h6>
+                <p class="card-text small">
+                    Edoble offers comprehensive internship programs in:
+                </p>
+                <ul class="list-unstyled small">
+                    <li><i class="fas fa-check text-success me-2"></i>Web App Development</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Mobile App Development</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Full-Stack Development</li>
+                    <li><i class="fas fa-check text-success me-2"></i>UI/UX Design</li>
+                    <li><i class="fas fa-check text-success me-2"></i>IT Consulting</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Real-time preview functionality
+    document.getElementById('holder_name').addEventListener('input', function () {
+        document.getElementById('preview-holder').textContent = this.value || '[Intern Name]';
+    });
+
+    document.getElementById('course_name').addEventListener('input', function () {
+        document.getElementById('preview-course').textContent = this.value || '[Internship Program]';
+    });
+
+    document.getElementById('issue_date').addEventListener('input', function () {
+        const date = this.value ? new Date(this.value).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }) : '[Date]';
+        document.getElementById('preview-date').textContent = date;
+    });
+
+    document.getElementById('issuer_name').addEventListener('input', function () {
+        document.getElementById('preview-issuer').textContent = this.value || 'Edoble';
+    });
+</script>
+{% endblock %}

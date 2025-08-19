@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+
+{% block title %}Certificate Verification - Edoble Intern Certificate{% endblock %}
+
+{% block content %}
+<style>
+    .certificate-preview {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 2px solid #dee2e6 !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .certificate-preview::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        pointer-events: none;
+    }
+
+    .certificate-preview .edoble-brand {
+        color: #2c3e50;
+        font-weight: 800;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .certificate-preview .edoble-tagline {
+        color: #3498db;
+        font-style: italic;
+        font-size: 0.9rem;
+    }
+
+    .certificate-preview h5 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    .certificate-preview h6 {
+        color: #3498db;
+        font-weight: 600;
+        margin: 0.5rem 0;
+    }
+
+    .certificate-preview hr {
+        border-color: #3498db;
+        opacity: 0.3;
+    }
+
+    .certificate-preview .text-primary {
+        color: #3498db !important;
+    }
+
+    .certificate-preview code {
+        background: #e9ecef;
+        color: #495057;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+    }
+
+    .certificate-preview .small {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .certificate-actions .btn {
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .certificate-actions .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .certificate-info {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        border: 1px solid #90caf9;
+    }
+
+    .certificate-info h6 {
+        color: #1976d2;
+        font-weight: 600;
+    }
+
+    .certificate-info li {
+        color: #424242;
+    }
+
+    .certificate-info .text-success {
+        color: #2e7d32 !important;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        {% if valid and certificate %}
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Certificate Verified Successfully
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <h2 class="edoble-brand">EDOBLE</h2>
+                    <p class="edoble-tagline">Code with a Purpose - Build smart. Think bold. Impact real.</p>
+                    <h3>Certificate of Internship Completion</h3>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-user text-primary me-2"></i>Intern Details</h5>
+                        <p><strong>Name:</strong> {{ certificate.holder_name }}</p>
+                        <p><strong>Internship Program:</strong> {{ certificate.course_name }}</p>
+                        <p><strong>Completion Date:</strong> {{ certificate.issue_date.strftime('%B %d, %Y') }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-building text-primary me-2"></i>Certificate Details</h5>
+                        <p><strong>Certificate ID:</strong> <code
+                                class="bg-light px-2 py-1 rounded">{{ certificate.unique_id }}</code></p>
+                        <p><strong>Issuer:</strong> {{ certificate.issuer_name }}</p>
+                        <p><strong>Verification Date:</strong> {{ now.strftime('%B %d, %Y, %I:%M:%S %p') }}</p>
+                        <p><strong>Certificate Status:</strong> <span class="badge bg-success">Active</span></p>
+                    </div>
+                </div>
+
+                <!-- Certificate Preview Section -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-certificate text-primary me-2"></i>
+                                    Certificate Preview & Download
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <!-- Certificate Preview -->
+                                        <div class="certificate-preview border rounded p-4 bg-light">
+                                            <div class="text-center">
+                                                <h4 class="edoble-brand mb-2">EDOBLE</h4>
+                                                <p class="edoble-tagline mb-3">Code with a Purpose - Build smart. Think
+                                                    bold. Impact real.</p>
+                                                <h5>Certificate of Internship Completion</h5>
+                                                <hr>
+                                                <p><strong>This is to certify that</strong></p>
+                                                <h6 class="text-primary">{{ certificate.holder_name }}</h6>
+                                                <p>has successfully completed the internship program</p>
+                                                <h6 class="text-primary">{{ certificate.course_name }}</h6>
+                                                <hr>
+                                                <p><strong>Completion Date:</strong> {{
+                                                    certificate.issue_date.strftime('%B %d, %Y') }}</p>
+                                                <p><strong>Issuer:</strong> {{ certificate.issuer_name }}</p>
+                                                <p><strong>Certificate ID:</strong> <code
+                                                        class="bg-light px-2 py-1 rounded">{{ certificate.unique_id }}</code>
+                                                </p>
+                                                <hr>
+                                                <p class="small text-muted">
+                                                    <strong>Empowering Innovation, Delivering Impact</strong><br>
+                                                    Chennai, Tamil Nadu – India<br>
+                                                    Phone: +91 82481 85491 | Email: edoble.official@gmail.com<br>
+                                                    Website: www.edoble.in
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- Certificate Actions -->
+                                        <div class="d-grid gap-2 certificate-actions">
+                                            <a href="{{ url_for('preview_certificate', unique_id=certificate.unique_id) }}"
+                                                class="btn btn-primary" target="_blank">
+                                                <i class="fas fa-eye me-2"></i>Preview Certificate
+                                            </a>
+                                            <a href="{{ url_for('download_certificate', unique_id=certificate.unique_id) }}"
+                                                class="btn btn-success">
+                                                <i class="fas fa-download me-2"></i>Download Certificate
+                                            </a>
+                                            <button class="btn btn-outline-primary" onclick="printCertificate()">
+                                                <i class="fas fa-print me-2"></i>Print Certificate
+                                            </button>
+                                        </div>
+
+                                        <!-- Certificate Info -->
+                                        <div class="mt-3">
+                                            <div class="alert alert-info certificate-info">
+                                                <h6><i class="fas fa-info-circle me-2"></i>Certificate Information</h6>
+                                                <ul class="list-unstyled small mb-0">
+                                                    <li><i class="fas fa-check text-success me-2"></i>Digitally verified
+                                                    </li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>QR code embedded
+                                                    </li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Secure and
+                                                        tamper-proof</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Official Edoble
+                                                        document</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QR Code Section -->
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-qrcode text-primary me-2"></i>
+                                    QR Code for Verification
+                                </h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <img src="{{ url_for('get_qr_code', unique_id=certificate.unique_id) }}"
+                                    alt="QR Code for certificate verification" class="img-fluid"
+                                    style="max-width: 200px; height: auto;">
+                                <p class="text-muted mt-2 small">
+                                    Scan this QR code to verify this certificate
+                                </p>
+                                <button class="btn btn-sm btn-outline-primary"
+                                    onclick="downloadQRCode('{{ certificate.unique_id }}')">
+                                    <i class="fas fa-download me-2"></i>Download QR Code
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-link text-primary me-2"></i>
+                                    Verification Link
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted small">Share this link to verify the certificate:</p>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="{{ certificate.verification_url }}"
+                                        id="verificationLink" readonly>
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        onclick="copyVerificationLink()">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info mt-4">
+                    <h6><i class="fas fa-info-circle me-2"></i>About Edoble</h6>
+                    <p class="mb-0">
+                        Edoble is a next-generation product and service-based IT company committed to delivering
+                        innovative,
+                        scalable, and impactful digital solutions. Founded by Sanjay M, a teenage entrepreneur and
+                        visionary
+                        software developer, we specialize in distributed applications, full-stack development, and
+                        custom
+                        software tailored for startups, enterprises, and government sectors.
+                    </p>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">
+                        <i class="fas fa-home me-2"></i>Back to Home
+                    </a>
+                    <a href="https://edoble.in" target="_blank" class="btn btn-outline-primary">
+                        <i class="fas fa-external-link-alt me-2"></i>Visit Edoble Website
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Certificate Not Found or Invalid
+                </h4>
+            </div>
+            <div class="card-body text-center">
+                <i class="fas fa-times-circle text-danger fa-4x mb-3"></i>
+                <h5 class="text-danger">Certificate Verification Failed</h5>
+                <p class="text-muted">
+                    The certificate you're looking for either doesn't exist or has been marked as invalid.
+                    Please check the certificate ID and try again.
+                </p>
+                <div class="mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">
+                        <i class="fas fa-home me-2"></i>Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Search Another Certificate Section -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-search text-primary me-2"></i>
+                    Verify Another Intern Certificate
+                </h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('search_certificate') }}" method="GET" class="d-flex">
+                    <input type="text" name="unique_id" class="form-control me-2"
+                        placeholder="Enter Certificate ID (e.g., ABC12345)" required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search me-2"></i>Verify
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function copyVerificationLink() {
+        const linkInput = document.getElementById('verificationLink');
+        linkInput.select();
+        linkInput.setSelectionRange(0, 99999); // For mobile devices
+
+        navigator.clipboard.writeText(linkInput.value).then(function () {
+            // Show success message
+            const button = event.target.closest('button');
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            button.classList.remove('btn-outline-secondary');
+            button.classList.add('btn-success');
+
+            setTimeout(function () {
+                button.innerHTML = originalHTML;
+                button.classList.remove('btn-success');
+                button.classList.add('btn-outline-secondary');
+            }, 1000);
+        });
+    }
+
+    function downloadQRCode(uniqueId) {
+        const link = document.createElement('a');
+        link.href = `/qr/${uniqueId}`;
+        link.download = `qr_code_${uniqueId}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function printCertificate() {
+        // Open certificate preview in new window for printing
+        const certificateUrl = "{{ url_for('preview_certificate', unique_id=certificate.unique_id) if certificate else '#' }}";
+        if (certificateUrl !== '#') {
+            const printWindow = window.open(certificateUrl, '_blank');
+            printWindow.onload = function () {
+                printWindow.print();
+            };
+        }
+    }
+</script>
+{% endblock %}

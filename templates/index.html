@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Edoble Intern Certificate Verification System{% endblock %}
+
+{% block content %}
+<div class="hero-section text-center">
+    <div class="row align-items-center">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="display-4 fw-bold mb-4">
+                <span class="edoble-brand">EDOBLE</span> Intern Certificate Verification
+            </h1>
+            <p class="lead mb-4">
+                Verify the authenticity of internship completion certificates issued by Edoble -
+                <em>"Code with a Purpose - Build smart. Think bold. Impact real."</em>
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form action="{{ url_for('search_certificate') }}" method="GET" class="d-flex">
+                        <input type="text" name="unique_id" class="form-control form-control-lg me-2"
+                            placeholder="Enter Certificate ID (e.g., ABC12345)" required>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-search me-2"></i>Verify Certificate
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card certificate-card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-shield-alt text-primary fa-3x mb-3"></i>
+                <h5 class="card-title">Secure Verification</h5>
+                <p class="card-text">Each certificate has a unique ID and QR code for instant verification and
+                    authenticity confirmation.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card certificate-card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-qrcode text-success fa-3x mb-3"></i>
+                <h5 class="card-title">QR Code Scanning</h5>
+                <p class="card-text">Scan the QR code on any Edoble intern certificate to instantly verify its
+                    authenticity.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card certificate-card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-mobile-alt text-warning fa-3x mb-3"></i>
+                <h5 class="card-title">Mobile Friendly</h5>
+                <p class="card-text">Access certificate verification from any device - desktop, tablet, or mobile phone.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">
+                    <i class="fas fa-info-circle text-primary me-2"></i>
+                    How It Works
+                </h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-certificate text-success me-2"></i>For Interns</h5>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Receive your internship completion
+                                certificate</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Share the unique certificate ID with
+                                employers</li>
+                            <li><i class="fas fa-check text-success me-2"></i>QR code for instant verification</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-building text-primary me-2"></i>For Employers</h5>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Enter certificate ID to verify
+                                authenticity</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Scan QR code for instant verification</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Get detailed certificate information</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-body text-center">
+                <h3 class="card-title mb-4">
+                    <span class="edoble-brand">About Edoble</span>
+                </h3>
+                <p class="lead">
+                    "Empowering Innovation, Delivering Impact"
+                </p>
+                <p>
+                    Edoble is a next-generation product and service-based IT company committed to delivering innovative,
+                    scalable, and impactful digital solutions. Founded by Sanjay M, a teenage entrepreneur and visionary
+                    software developer, we specialize in distributed applications, full-stack development, and custom
+                    software tailored for startups, enterprises, and government sectors.
+                </p>
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <i class="fas fa-map-marker-alt text-primary fa-2x mb-2"></i>
+                        <h6>Location</h6>
+                        <p class="small">Chennai, Tamil Nadu – India</p>
+                    </div>
+                    <div class="col-md-4">
+                        <i class="fas fa-phone text-primary fa-2x mb-2"></i>
+                        <h6>Contact</h6>
+                        <p class="small">+91 82481 85491</p>
+                    </div>
+                    <div class="col-md-4">
+                        <i class="fas fa-envelope text-primary fa-2x mb-2"></i>
+                        <h6>Email</h6>
+                        <p class="small">edoble.official@gmail.com</p>
+                    </div>
+                </div>
+                <a href="https://edoble.in" target="_blank" class="btn btn-outline-primary mt-3">
+                    <i class="fas fa-external-link-alt me-2"></i>Visit Our Website
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
